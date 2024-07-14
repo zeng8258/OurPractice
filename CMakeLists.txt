@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # 项目名称
 project(my_program)
 
-file(GLOB SRC_FILES *.cpp)
+file(GLOB SRC_FILES src/*.cpp)
 
 include_directories(include)
 
-add_executable(OurProject main.cpp ${SRC_FILES})
+add_executable(OurPractice main.cpp ${SRC_FILES})

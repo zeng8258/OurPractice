@@ -1,7 +1,10 @@
 #include <iostream>
-
+#include "test.hpp"
 int main()
 {
-    std::cout << "Hello World!" << std::endl;
+    int a = 10;
+    int b = 20;
+    swap(a, b);
+    std::cout << "a = " << a << ", b = " << b << std::endl;
     return 0;
 }
