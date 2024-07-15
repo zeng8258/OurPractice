@@ -9,6 +9,10 @@
 
 class Manager
 {
+public:
+    Manager();
+    ~Manager();
+    void showMenu();
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include <iostream>
+/* #include <iostream>
 #include "test.hpp"
 int main()
 {
@@ -7,4 +7,11 @@ int main()
     swap(a, b);
     std::cout << "a = " << a << ", b = " << b << std::endl;
     return 0;
+} */
+
+#include <iostream>
+#include "Manager.hpp"
+int main()
+{
+
 }
