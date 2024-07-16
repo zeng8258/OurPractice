@@ -10,7 +10,7 @@ enum UserStatus
 
 User::User():_name("user"),_password("111111"),_status(0){}
 
-User::User(const std::string&name,const std::string& pwd):_name(name),_password(pwd),_status(0){}
+User::User(const std::string&name,const std::string& pwd):_name(name), _password(pwd), _status(USER_STATUS_UNLOGIN) {}
 
 std::string User::getName(){return this->_name;}
 
@@ -64,7 +64,7 @@ void User::listAccessibleCommunities()
     }
 }
 
-void User::setUserStatus(const int ustatus)
+void User::setUserStatus(const UserStatus ustatus)
 {
     this->_status=ustatus;
 }

@@ -3,9 +3,10 @@
 #ifndef USER_HPP
 #define USER_HPP
 
-#include<string>
-#include<vector>
-#include"Community.hpp"
+#include <string>
+#include <vector>
+#include "Community.hpp"
+#include "def.hpp"
 
 enum UserStatus{};
 class User
@@ -14,11 +15,12 @@ private:
     std::string _name;
     std::string _password;
     std::vector<std::string>_accessibleCommunities;
-    int _status;
+    UserStatus _status;
 
 
 public:
     User();
+    User(const std::string&name,const std::string& pwd);
     ~User();
     std::string getName();
     void changePassword(const std::string& originalPassword);
@@ -26,7 +28,7 @@ public:
     std::string userTalk();
     void addCommunity(const std::string&community);
     void listAccessibleCommunities();
-    void setUserStatus(const int ustatus);
+    void setUserStatus(const UserStatus ustatus);
     int getUserStatus();
 
 };
