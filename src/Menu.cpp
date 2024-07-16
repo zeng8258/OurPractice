@@ -10,7 +10,7 @@ void Menu::showMenu(int userStatus) const
 {
     // 读取文件
     std::ifstream ifs;
-    std::string menuFileName = "menu" + std::to_string(userStatus) + ".txt";
+    std::string menuFileName = "files/menu" + std::to_string(userStatus) + ".txt";
     ifs.open(menuFileName, std::ios::in);
 
     if (!ifs.is_open())

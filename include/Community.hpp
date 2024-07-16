@@ -8,6 +8,7 @@
 
 class Community
 {
+public:
 };
 
 #endif

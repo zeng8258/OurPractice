@@ -13,5 +13,4 @@ enum UserStatus
     USER_STATUS_CONVERSATION,
 };
 
-
 #endif
