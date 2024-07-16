@@ -23,7 +23,7 @@ public:
     std::string getName();
     void changePassword(const std::string& originalPassword);
     void setNameAndPassword(const std::string& uname,const std::string&pwd);
-    void userTalk();
+    std::string userTalk();
     void addCommunity(const std::string&community);
     void listAccessibleCommunities();
     void setUserStatus(const int ustatus);

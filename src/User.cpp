@@ -36,11 +36,12 @@ void User::changePassword(const std::string& originalPassword)
 
 }
 
-void User::userTalk()
+std::string User::userTalk()
 {
     std::cout<<_name<<":";
     std::string message;
     std::cin>>message;
+    return message;
 }
 
 void User::setNameAndPassword(const std::string& uname,const std::string&pwd)
