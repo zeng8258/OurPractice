@@ -46,12 +46,12 @@ void User::_addCommunity(const Community&community)
     User::_accessibleCommunities.push_back(community);
 }
 
-void User::_listAccessibleCommunities()
+/*void User::_listAccessibleCommunities()
 {
     std::cout<<"communities accessible by "<<User::_name<<":"<<std::endl;
     for(const auto&community:_accessibleCommunities)
     {
         std::cout<<"-"<<community._getName();
     }
-}
+}*/
 
