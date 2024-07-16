@@ -11,10 +11,9 @@ public:
     ~Menu();
 
     // 显示菜单
-    void showMenu(int userStatus);
+    void showMenu(int userStatus) const;
 
+private:
 };
-
-
 
 #endif
