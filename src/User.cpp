@@ -3,10 +3,18 @@
 #include<vector>
 #include<iostream>
 
-User::User():_name("user"),_password("111111"){}
-std::string User::_getName(){return this->_name;}
+enum UserStatus
+{
+    LOGIN_SCREEN,CHATTING,IN_COMMUNITY
+};
 
-void User::_changePassword(const std::string& originalPassword)
+User::User():_name("user"),_password("111111"),_status(0){}
+
+User::User(const std::string&name,const std::string& pwd):_name(name),_password(pwd),_status(0){}
+
+std::string User::getName(){return this->_name;}
+
+void User::changePassword(const std::string& originalPassword)
 {
     if(originalPassword!=this->_password)
     {
@@ -28,30 +36,39 @@ void User::_changePassword(const std::string& originalPassword)
 
 }
 
-void User::_userTalk()
+void User::userTalk()
 {
     std::cout<<_name<<":";
     std::string message;
     std::cin>>message;
 }
 
-void User::_setNameAndPassword(const std::string& uname,const std::string&pwd)
+void User::setNameAndPassword(const std::string& uname,const std::string&pwd)
 {
     this->_name=uname;
     this->_password=pwd;
 }
 
-void User::_addCommunity(const Community&community)
+void User::addCommunity(const std::string&community)
 {
     User::_accessibleCommunities.push_back(community);
 }
 
-/*void User::_listAccessibleCommunities()
+void User::listAccessibleCommunities()
 {
     std::cout<<"communities accessible by "<<User::_name<<":"<<std::endl;
     for(const auto&community:_accessibleCommunities)
     {
-        std::cout<<"-"<<community._getName();
+        std::cout<<"-"<<community.getName();
     }
-}*/
+}
 
+void User::setUserStatus(const int ustatus)
+{
+    this->_status=ustatus;
+}
+
+int User::getUserStatus()
+{
+    return this->_status;
+}

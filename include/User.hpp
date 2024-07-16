@@ -7,23 +7,27 @@
 #include<vector>
 #include"Community.hpp"
 
+enum UserStatus{};
 class User
 {
 private:
     std::string _name;
     std::string _password;
-    std::vector<Community>_accessibleCommunities;
+    std::vector<std::string>_accessibleCommunities;
+    int _status;
 
 
 public:
     User();
     ~User();
-    std::string _getName();
-    void _changePassword(const std::string& originalPassword);
-    void _setNameAndPassword(const std::string& uname,const std::string&pwd);
-    void _userTalk();
-    void _addCommunity(const Community&community);
-    void _listAccessibleCommunities();
+    std::string getName();
+    void changePassword(const std::string& originalPassword);
+    void setNameAndPassword(const std::string& uname,const std::string&pwd);
+    void userTalk();
+    void addCommunity(const std::string&community);
+    void listAccessibleCommunities();
+    void setUserStatus(const int ustatus);
+    int getUserStatus();
 
 };
 
