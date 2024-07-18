@@ -15,7 +15,7 @@ public:
     std::string getName() const;
     void changePassword(const std::string &originalPassword);
     void setNameAndPassword(const std::string &uname, const std::string &pwd);
-    const std::string &userTalk();
+    std::string userTalk();
     void addCommunity(const std::string &community);
     void listAccessibleCommunities();
     void setUserStatus(const UserStatus ustatus);

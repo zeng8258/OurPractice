@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include "def.hpp"
+#include <filesystem>
 
 static Manager *instance = nullptr;
 Manager::Manager() : isLogin(false), _curUser(User())
@@ -26,7 +27,7 @@ void Manager::showMenu() const
 {
     if (this->isLogin)
         Menu().showMenu(this->_curUser.getUserStatus());
-    else{}
+    else
         Menu().showMenu(USER_STATUS_UNLOGIN);
 }
 
@@ -172,9 +173,9 @@ void Manager::addCommunity()
     std::cin >> communityName;
 
     // 遍历列表，检查是否已经存在
-    for (auto communityName : this->_communityList)
+    for (auto CommunityName : this->_communityList)
     {
-        if (communityName == communityName)
+        if (communityName == CommunityName)
         {
             std::cout << "社区名称已存在" << std::endl;
             return;
@@ -188,6 +189,30 @@ void Manager::addCommunity()
     std::ofstream outfile("../files/community/communityList.txt", std::ios::app);
     outfile << communityName << std::endl;
     outfile.close();
+
+    // 创建files/community/communityInfo/community" + communityName 文件夹 
+    std::string path = "../files/community/communityInfo/community" + communityName;
+    std::filesystem::create_directory(path);
+    
+
+    // 创建files/community/communityInfo/community" + communityName/robotInfo 和 conversationInfo 和 conversationHistory 文件夹
+    std::string robotInfoPath = path + "/robotInfo";
+    std::string conversationPath = path + "/conversationInfo";
+    std::string conversationHistoryPath = path + "/conversationHistory";
+    std::filesystem::create_directory(robotInfoPath);
+    std::filesystem::create_directory(conversationPath);
+    std::filesystem::create_directory(conversationHistoryPath);
+
+    // 创建 files/community/communityInfo/community" + communityName/robotList.txt 和 conversastion.txt 文件
+    std::string robotListPath = path + "/robotList.txt";
+    std::string conversationListPath = path + "/conversation.txt";
+    std::ofstream outfile2(robotListPath);
+    std::ofstream outfile3(conversationListPath);
+    outfile2.close();
+    outfile3.close();
+
+
+
 
     // 创建成功
     std::cout << "创建成功" << std::endl;

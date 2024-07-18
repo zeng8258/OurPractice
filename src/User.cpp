@@ -30,11 +30,11 @@ void User::changePassword(const std::string &originalPassword)
     return;
 }
 
-const std::string &User::userTalk()
+std::string User::userTalk()
 {
     std::cout << _name << ":";
     std::string message;
-    std::cin >> message;
+    getline(std::cin, message);
     return message;
 }
 

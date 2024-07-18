@@ -6,8 +6,9 @@
 #include <string>
 #include "def.hpp"
 
+
 // 构造函数
-Community::Community(const std::string &name, User* curUser) : _name(name), _curUser(curUser)
+Community::Community(const std::string &name, User *curUser) : _name(name), _curUser(curUser)
 {
     // 初始化机器人列表和会话列表
     this->_robotList.clear();
@@ -68,13 +69,15 @@ void Community::addRobot()
 
     this->_robotList.push_back(name);
 
-    // 将机器人的信息存入文件
-    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt", std::ios::app);
-    file << name << std::endl;
-    file.close();
+    // 将机器人的信息存入List文件
+    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
+    for (const auto &robot : _robotList)
+    {
+        file << robot << std::endl;
+    }
 
-    // 将机器人的提示词存入文件
-    std::ofstream file2("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name + ".txt", std::ios::app);
+    // 创建一个文件，将机器人的提示词存入文件
+    std::ofstream file2("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name + ".txt");
     file2 << description << std::endl;
     file2.close();
 
@@ -111,32 +114,36 @@ void Community::delRobot()
     // 显示机器人列表
     this->showRobotList();
 
-    std::cout << "请输入要删除的机器人的名字：";
-    std::string name;
-    std::cin >> name;
+    // 选择要删除的机器人
+    std::cout << "请选择要删除的机器人的序号：";
+    int selection;
+    std::cin >> selection;
 
-    // 查找并删除机器人
-    auto it = std::find(_robotList.begin(), _robotList.end(), name);
-    if (it != _robotList.end())
+    // 检查选择是否合法
+    if (selection < 1 || selection > _robotList.size())
     {
-        _robotList.erase(it);
-
-        // 删除机器人信息文件
-        std::remove(("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name).c_str());
-
-        // 更新机器人列表文件
-        std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
-        for (const auto &robot : _robotList)
-        {
-            file << robot << std::endl;
-        }
-
-        std::cout << "机器人删除成功！" << std::endl;
+        std::cout << "选择不合法！" << std::endl;
+        return;
     }
-    else
+
+    // 获取要删除的机器人的名字
+    std::string name = _robotList[selection - 1];
+
+    // 从列表中删除
+    _robotList.erase(_robotList.begin() + selection - 1);
+
+    // 删除机器人信息文件
+    std::remove(("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name + ".txt").c_str());
+
+    // 更新机器人列表文件
+    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
+    for (const auto &robot : _robotList)
     {
-        std::cout << "机器人不存在！" << std::endl;
+        file << robot << std::endl;
     }
+
+    std::cout << "机器人删除成功！" << std::endl;
+
 }
 
 // 添加会话的函数
@@ -157,17 +164,19 @@ void Community::addConversation()
     // 选择对话的机器人
     std::cout << "请选择会话的机器人：" << std::endl;
     this->showRobotList();
-    std::string robotName;
-    std::cin >> robotName;
-
-    // 检查机器人是否存在于std::vector<std::string> _robotList中
-    if (std::find(this->_robotList.begin(), this->_robotList.end(), robotName) == _robotList.end())
+    int selection;
+    std::cin >> selection;
+    if (selection < 1 || selection > _robotList.size())
     {
-        std::cout << "机器人不存在！" << std::endl;
+        std::cout << "选择不合法！" << std::endl;
         return;
     }
+    std::string robotName = _robotList[selection - 1];
 
     // 机器人存在
+    // 添加会话到列表
+    _conversationList.push_back(name);
+
     // 保存会话信息this->function[selection]();
     // 将会话信息存入文件
     std::ofstream file("../files/community/communityInfo/community" + this->_name + "/conversationList.txt");
@@ -210,11 +219,7 @@ void Community::delConversation()
     }
 
     // 显示会话列表
-    std::cout << "会话列表：" << std::endl;
-    for (size_t i = 0; i < this->_conversationList.size(); ++i)
-    {
-        std::cout << i + 1 << ". " << this->_conversationList[i] << std::endl;
-    }
+    this->showConversationList();
 
     // 选择要删除的会话
     std::cout << "请选择要删除的会话：";
@@ -281,16 +286,20 @@ void Community::enterConversation()
     // 从文件中读取会话，如果这个会话不由这个用户创建，不允许其进入
     std::ifstream file("../files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + this->_conversationList[choice - 1] + ".txt");
     std::string creatorName;
-    file >> creatorName;
-    if (creatorName != this->_curUser->getName())
+    // 用户名位于第一行
+    std::getline(file, creatorName);
+    if (creatorName!= this->_curUser->getName())
     {
-        std::cout << "您没有权限进入这个会话！" << std::endl;
+        std::cout << "您没有权限进入这个会话" << std::endl;
         return;
     }
 
+    std::cout << "进入会话:" << this->_conversationList[choice - 1] << std::endl;
+
     // 从文件中读取机器人信息
     std::string robotName;
-    file >> robotName;
+    // 机器人名位于第二行
+    std::getline(file, robotName);
     file.close();
 
     // 进入会话
@@ -301,8 +310,9 @@ void Community::enterConversation()
     // 需要先创建一个Robot
     Robot robot(robotName);
     Conversation conversation(this->_curUser, &robot, this->_name);
+    
     conversation.chat();
-
+    
     // 更新用户状态
     this->_curUser->setUserStatus(USER_STATUS_COMMUNITY);
 }

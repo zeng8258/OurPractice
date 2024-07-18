@@ -2,9 +2,11 @@
 
 Robot::Robot() : _name("Robot"), _key(KEY)
 {
+  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
+
   _response = R"(
       {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
         "messages": [{"role": "user", "content": ""}],
         "max_tokens": 4096,
         "temperature": 0
@@ -14,9 +16,11 @@ Robot::Robot() : _name("Robot"), _key(KEY)
 
 Robot::Robot(std::string name) : _name(name), _key(KEY)
 {
+  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
+
   _response = R"(
       {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
         "messages": [{"role": "user", "content": ""}],
         "max_tokens": 4096,
         "temperature": 0
@@ -49,7 +53,7 @@ std::string &Robot::response()
 {
   auto completion = openai::chat().create(_response);
   this->_res = completion.dump(2);
-  //std::cout << _name << ':' << this->_res << std::endl;
+  this->_res = this->_res.substr(this->_res.find("content") + 10, this->_res.find("role") - this->_res.find("content") - 12);
   return this->_res;
 }
 
