@@ -14,10 +14,10 @@ Community::Community(const std::string &name, User* curUser) : _name(name), _cur
     this->_conversationList.clear();
 
     // 从文件中读取robot列表和会话列表，如果文件不存在则创建对应的文件
-    std::ifstream file("files/community/communityInfo/community" + this->_name + "/robotList.txt");
+    std::ifstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
     if (!file)
     {
-        std::ofstream file("files/community/communityInfo/community" + this->_name + "/robotList.txt");
+        std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
         file.close();
     }
     else
@@ -30,10 +30,10 @@ Community::Community(const std::string &name, User* curUser) : _name(name), _cur
         file.close();
     }
 
-    std::ifstream file2("files/community/communityInfo/community" + this->_name + "/conversationList.txt");
+    std::ifstream file2("../files/community/communityInfo/community" + this->_name + "/conversationList.txt");
     if (!file2)
     {
-        std::ofstream file2("files/community/communityInfo/community" + this->_name + "/conversationList.txt");
+        std::ofstream file2("../files/community/communityInfo/community" + this->_name + "/conversationList.txt");
         file2.close();
     }
     else
@@ -69,12 +69,12 @@ void Community::addRobot()
     this->_robotList.push_back(name);
 
     // 将机器人的信息存入文件
-    std::ofstream file("files/community/communityInfo/community" + this->_name + "/robotList.txt", std::ios::app);
+    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt", std::ios::app);
     file << name << std::endl;
     file.close();
 
     // 将机器人的提示词存入文件
-    std::ofstream file2("files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name + ".txt", std::ios::app);
+    std::ofstream file2("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name + ".txt", std::ios::app);
     file2 << description << std::endl;
     file2.close();
 
@@ -122,10 +122,10 @@ void Community::delRobot()
         _robotList.erase(it);
 
         // 删除机器人信息文件
-        std::remove(("files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name).c_str());
+        std::remove(("../files/community/communityInfo/community" + this->_name + "/robotInfo/robot" + name).c_str());
 
         // 更新机器人列表文件
-        std::ofstream file("files/community/communityInfo/community" + this->_name + "/robotList.txt");
+        std::ofstream file("../files/community/communityInfo/community" + this->_name + "/robotList.txt");
         for (const auto &robot : _robotList)
         {
             file << robot << std::endl;
@@ -170,10 +170,10 @@ void Community::addConversation()
     // 机器人存在
     // 保存会话信息this->function[selection]();
     // 将会话信息存入文件
-    std::ofstream file("files/community/communityInfo/community" + this->_name + "/conversationList.txt");
+    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/conversationList.txt");
     file << name << std::endl;
     file.close();
-    std::ofstream file2("files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + name + ".txt");
+    std::ofstream file2("../files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + name + ".txt");
     file2 << this->_curUser->getName() << std::endl;
     file2 << robotName << std::endl;
     file2.close();
@@ -230,7 +230,7 @@ void Community::delConversation()
     this->_conversationList.erase(this->_conversationList.begin() + choice - 1);
 
     // 更新会话列表文件
-    std::ofstream file("files/community/communityInfo/community" + this->_name + "/conversationList.txt");
+    std::ofstream file("../files/community/communityInfo/community" + this->_name + "/conversationList.txt");
     for (const auto &conversation : this->_conversationList)
     {
         file << conversation << std::endl;
@@ -238,8 +238,8 @@ void Community::delConversation()
     file.close();
 
     // 删除会话文件和会话历史记录
-    std::remove(("files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + this->_conversationList[choice - 1] + ".txt").c_str());
-    std::remove(("files/community/communityInfo/community" + this->_name + "/conversationHistory/conversation" + this->_conversationList[choice - 1] + ".txt").c_str());
+    std::remove(("../files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + this->_conversationList[choice - 1] + ".txt").c_str());
+    std::remove(("../files/community/communityInfo/community" + this->_name + "/conversationHistory/conversation" + this->_conversationList[choice - 1] + ".txt").c_str());
 
     std::cout << "会话删除成功！" << std::endl;
 }
@@ -279,7 +279,7 @@ void Community::enterConversation()
     }
 
     // 从文件中读取会话，如果这个会话不由这个用户创建，不允许其进入
-    std::ifstream file("files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + this->_conversationList[choice - 1] + ".txt");
+    std::ifstream file("../files/community/communityInfo/community" + this->_name + "/conversationInfo/conversation" + this->_conversationList[choice - 1] + ".txt");
     std::string creatorName;
     file >> creatorName;
     if (creatorName != this->_curUser->getName())

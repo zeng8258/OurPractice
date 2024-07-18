@@ -26,7 +26,7 @@ void Manager::showMenu() const
 {
     if (this->isLogin)
         Menu().showMenu(this->_curUser.getUserStatus());
-    else
+    else{}
         Menu().showMenu(USER_STATUS_UNLOGIN);
 }
 
@@ -40,7 +40,7 @@ int Manager::select() const
 void Manager::loadUserList()
 {
     // 从files/user/userList.txt中获取所有的userName
-    std::ifstream infile("files/user/userList.txt");
+    std::ifstream infile("../files/user/userList.txt");
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;
@@ -56,7 +56,7 @@ void Manager::loadUserList()
 void Manager::loadCommunityList()
 {
     // 从files/community/communityList.txt中获取所有的communityName
-    std::ifstream infile("files/community/communityList.txt");
+    std::ifstream infile("../files/community/communityList.txt");
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;
@@ -94,12 +94,12 @@ void Manager::registerUser()
     this->_userList.push_back(name);
 
     // 写入files/userList.txt
-    std::ofstream outfile("files/user/userList.txt", std::ios::app);
+    std::ofstream outfile("../files/user/userList.txt", std::ios::app);
     outfile << name << std::endl;
     outfile.close();
 
     // 写入files/userInfo/user
-    std::ofstream outfile2("files/user/userInfo/user" + name + ".txt");
+    std::ofstream outfile2("../files/user/userInfo/user" + name + ".txt");
     outfile2 << name << "\n"
              << password << std::endl;
     outfile2.close();
@@ -121,7 +121,7 @@ void Manager::login()
         if (userName == name) // 找到用户名
         {
             // 读取文件
-            std::ifstream infile("files/user/userInfo/user" + name + ".txt");
+            std::ifstream infile("../files/user/userInfo/user" + name + ".txt");
             if (!infile)
             {
                 std::cout << "文件打开失败" << std::endl;
@@ -185,7 +185,7 @@ void Manager::addCommunity()
     this->_communityList.push_back(communityName);
 
     // 写入files/communityList.txt
-    std::ofstream outfile("files/community/communityList.txt", std::ios::app);
+    std::ofstream outfile("../files/community/communityList.txt", std::ios::app);
     outfile << communityName << std::endl;
     outfile.close();
 
@@ -266,7 +266,7 @@ void Manager::changeUser()
     std::cin >> password;
 
     // 检查密码，密码在文件中
-    std::ifstream infile("files/user/userInfo/user" + this->_userList[userIndex - 1] + ".txt");
+    std::ifstream infile("../files/user/userInfo/user" + this->_userList[userIndex - 1] + ".txt");
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;

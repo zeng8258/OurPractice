@@ -9,3 +9,5 @@ file(GLOB SRC_FILES src/*.cpp)
 include_directories(include)
 
 add_executable(OurPractice main.cpp ${SRC_FILES})
+
+target_link_libraries(OurPractice curl)
