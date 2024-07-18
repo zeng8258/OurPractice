@@ -12,7 +12,7 @@
 
 class Manager
 {
-private:
+//private:
     // 单件类
     //Manager();
 
