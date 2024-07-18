@@ -6,11 +6,13 @@
 #include "User.hpp"
 #include "Robot.hpp"
 
+class User;
+
 class Conversation
 {
 public:
     // 构造
-    Conversation(const User* user, const Robot* robot) : _user(user), _robot(robot) {}
+    Conversation(User* user, Robot* robot, std::string& communityName) : _user(user), _robot(robot), _communityName(communityName) {}
 
     // 析构
     ~Conversation() {}
@@ -20,8 +22,10 @@ public:
 
 
 private:
-    const User* _user;
-    const Robot* _robot;
+    User *_user;
+    Robot *_robot;
+    std::string _name;
+    std::string _communityName;
     std::vector<std::string> _messages;
 };
 

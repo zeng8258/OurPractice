@@ -2,7 +2,7 @@
 #define DEF_HPP
 
 // key
-#define KEY "sk-XXX"
+#define KEY "sk-0DITh75zrxk-8tM6mhckTA"
 
 // user status
 enum UserStatus
