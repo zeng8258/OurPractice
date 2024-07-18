@@ -61,3 +61,9 @@ void Robot::setTemperature(double temperature)
 {
   _response["temperature"] = temperature;
 }
+
+// 清除上下文
+void Robot::clearContext()
+{
+  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
+}

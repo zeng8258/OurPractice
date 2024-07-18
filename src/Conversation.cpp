@@ -3,9 +3,11 @@
 #include "User.hpp"
 #include <iostream>
 #include <fstream>
+#include "function.hpp"
 
 void Conversation::chat()
 {
+    std::cout << "正在加载......" << std::endl;
     // 从文件中读取机器人的提示词
     std::ifstream file("../files/community/communityInfo/community" + this->_communityName + "/robotInfo/robot" + this->_robot->getName() + ".txt");
     std::string description;
@@ -19,18 +21,26 @@ void Conversation::chat()
     // 将对话的历史记录发给robot
 
 
-    std::string nothing;
-    std::getline(std::cin, nothing);
-
+    // 清除“正在加载......”
+    function::clear();
+    std::cout << "提示：输入“exit”退出对话，输入“clear”清除上下文" << std::endl;
     // 对话
     while (true)
     {
         std::string userMessage = this->_user->userTalk();
 
-        if (userMessage == "exit")
+        if (userMessage == "exit") //退出
         {
             std::cout << "Conversation ended." << std::endl;
             return;
+        }
+
+        if (userMessage == "clear") // 清除上下文
+        {
+            this->_robot->clearContext();
+            function::clear();
+            std::cout << "提示：输入“exit”退出对话，输入“clear”清除上下文" << std::endl;
+            continue;
         }
 
         this->_robot->ueserInput(userMessage);

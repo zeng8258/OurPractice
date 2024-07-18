@@ -5,23 +5,27 @@
 #include <string>
 #include "def.hpp"
 #include <filesystem>
+#include "function.hpp"
 
-static Manager *instance = nullptr;
+// static Manager *instance = nullptr;
 Manager::Manager() : isLogin(false), _curUser(User())
 {
+    // 清屏
+    function::clear();
+
     // 从文件中读取社区列表
     this->loadCommunityList();
     this->loadUserList();
 }
 Manager::~Manager() {}
 
-/* Manager& Manager::getInstance()
+/* Manager& Manager::instance()
 {
     if (_instance == nullptr)
         _instance = new Manager();
 
     return *_instance;
-} */
+}*/
 
 void Manager::showMenu() const
 {
@@ -35,6 +39,7 @@ int Manager::select() const
 {
     int select;
     std::cin >> select;
+    getchar();
     return select;
 }
 
@@ -45,6 +50,9 @@ void Manager::loadUserList()
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
     std::string userName;
@@ -61,6 +69,9 @@ void Manager::loadCommunityList()
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
     std::string communityName;
@@ -68,6 +79,9 @@ void Manager::loadCommunityList()
     {
         this->_communityList.push_back(communityName);
     }
+
+    // 关闭文件
+    infile.close();
 }
 
 void Manager::registerUser()
@@ -76,6 +90,7 @@ void Manager::registerUser()
     std::string name, password;
     std::cout << "请输入用户名：";
     std::cin >> name;
+    getchar();
 
     // 遍历列表
     for (auto userName : this->_userList)
@@ -83,6 +98,9 @@ void Manager::registerUser()
         if (userName == name)
         {
             std::cout << "用户名已存在" << std::endl;
+            // 暂停和清屏
+            function::pause();
+            function::clear();
             return;
         }
     }
@@ -90,6 +108,7 @@ void Manager::registerUser()
     // 输入密码
     std::cout << "请输入密码：";
     std::cin >> password;
+    getchar();
 
     // 加入_userList
     this->_userList.push_back(name);
@@ -106,6 +125,9 @@ void Manager::registerUser()
     outfile2.close();
 
     std::cout << "注册成功" << std::endl;
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Manager::login()
@@ -115,6 +137,7 @@ void Manager::login()
     std::cin >> name;
     std::cout << "请输入密码：";
     std::cin >> password;
+    getchar();
 
     // 遍历列表
     for (auto userName : this->_userList)
@@ -126,6 +149,9 @@ void Manager::login()
             if (!infile)
             {
                 std::cout << "文件打开失败" << std::endl;
+                // 暂停和清屏
+                function::pause();
+                function::clear();
                 return;
             }
             std::string userName, userPassword;
@@ -137,17 +163,26 @@ void Manager::login()
                 this->_curUser = User(name, password);
                 this->_curUser.setUserStatus(USER_STATUS_MAINMENU);
                 std::cout << "登录成功" << std::endl;
+                // 暂停和清屏
+                function::pause();
+                function::clear();
                 return;
             }
             else // 密码错误
             {
                 std::cout << "密码错误" << std::endl;
+                // 暂停和清屏
+                function::pause();
+                function::clear();
                 return;
             }
         }
         else // 未找到用户名
         {
             std::cout << "用户名不存在" << std::endl;
+            // 暂停和清屏
+            function::pause();
+            function::clear();
             return;
         }
     }
@@ -155,6 +190,8 @@ void Manager::login()
 void Manager::exitManager()
 {
     std::cout << "退出程序" << std::endl;
+    // 清屏
+    function::clear();
     exit(0);
 }
 
@@ -163,6 +200,9 @@ void Manager::logout()
     this->isLogin = false;
     this->_curUser.setUserStatus(USER_STATUS_UNLOGIN);
     std::cout << "退出登录" << std::endl;
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Manager::addCommunity()
@@ -171,6 +211,7 @@ void Manager::addCommunity()
     std::string communityName;
     std::cout << "请输入社区名称：";
     std::cin >> communityName;
+    getchar();
 
     // 遍历列表，检查是否已经存在
     for (auto CommunityName : this->_communityList)
@@ -178,6 +219,9 @@ void Manager::addCommunity()
         if (communityName == CommunityName)
         {
             std::cout << "社区名称已存在" << std::endl;
+            // 暂停和清屏
+            function::pause();
+            function::clear();
             return;
         }
     }
@@ -211,11 +255,12 @@ void Manager::addCommunity()
     outfile2.close();
     outfile3.close();
 
-
-
-
     // 创建成功
     std::cout << "创建成功" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Manager::enterCommunity()
@@ -227,11 +272,15 @@ void Manager::enterCommunity()
     int communityIndex;
     std::cout << "请输入社区序号：";
     std::cin >> communityIndex;
+    getchar();
 
     // 检查
     if (communityIndex < 1 || communityIndex > this->_communityList.size())
     {
         std::cout << "社区序号错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -241,6 +290,10 @@ void Manager::enterCommunity()
     // 进入社区
     this->_curUser.setUserStatus(USER_STATUS_COMMUNITY);
     std::cout << "进入社区成功" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Manager::showCommunityInfo() const
@@ -253,6 +306,10 @@ void Manager::showCommunityInfo() const
 
     // 显示会话列表
     this->_curCommunity.showConversationList();
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Manager::showCommunityList() const
@@ -277,11 +334,15 @@ void Manager::changeUser()
     int userIndex;
     std::cout << "请输入用户序号：";
     std::cin >> userIndex;
+    getchar();
 
     // 检查
     if (userIndex < 1 || userIndex > this->_userList.size())
     {
         std::cout << "用户序号错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -289,30 +350,39 @@ void Manager::changeUser()
     std::string password;
     std::cout << "请输入密码：";
     std::cin >> password;
+    getchar();
 
     // 检查密码，密码在文件中
     std::ifstream infile("../files/user/userInfo/user" + this->_userList[userIndex - 1] + ".txt");
     if (!infile)
     {
         std::cout << "文件打开失败" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
     std::string userName, userPassword;
     infile >> userName >> userPassword;
+    infile.close();
 
     if (userPassword != password)
     {
         std::cout << "密码错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
     else
     {
         this->_curUser.setNameAndPassword(this->_userList[userIndex - 1], password);
         std::cout << "修改成功" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
     }
-
-    infile.close();
 }
 
 void Manager::showUserList() const

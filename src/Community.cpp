@@ -5,7 +5,8 @@
 #include <fstream>
 #include <string>
 #include "def.hpp"
-
+#include <cstdlib>
+#include "function.hpp"
 
 // 构造函数
 Community::Community(const std::string &name, User *curUser) : _name(name), _curUser(curUser)
@@ -56,6 +57,10 @@ void Community::showCommunityInfo() const
     this->showRobotList();
     std::cout << "会话列表：" << std::endl;
     this->showConversationList();
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 void Community::addRobot()
@@ -66,6 +71,17 @@ void Community::addRobot()
     std::cout << "请输入描述：";
     std::string description;
     std::cin >> description;
+    getchar();
+
+    // 检查机器人是否已经存在于std::vector<std::string> _robotList中
+    if (std::find(_robotList.begin(), _robotList.end(), name) != _robotList.end())
+    {
+        std::cout << "机器人已经存在！" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
+        return;
+    }
 
     this->_robotList.push_back(name);
 
@@ -82,6 +98,10 @@ void Community::addRobot()
     file2.close();
 
     std::cout << "机器人添加成功！" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 显示机器人列表的函数
@@ -91,14 +111,20 @@ void Community::showRobotList() const
     if (_robotList.empty())
     {
         std::cout << "没有机器人！" << std::endl;
-        return;
     }
-    // 显示机器人列表，带序号
-    std::cout << "机器人列表：" << std::endl;
-    for (size_t i = 0; i < _robotList.size(); ++i)
+    else
     {
-        std::cout << i + 1 << ". " << _robotList[i] << std::endl;
+        // 显示机器人列表，带序号
+        std::cout << "机器人列表：" << std::endl;
+        for (size_t i = 0; i < _robotList.size(); ++i)
+        {
+            std::cout << i + 1 << ". " << _robotList[i] << std::endl;
+        }
     }
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 删除机器人的函数
@@ -108,6 +134,9 @@ void Community::delRobot()
     if (_robotList.empty())
     {
         std::cout << "没有机器人！" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -118,11 +147,15 @@ void Community::delRobot()
     std::cout << "请选择要删除的机器人的序号：";
     int selection;
     std::cin >> selection;
+    getchar();
 
     // 检查选择是否合法
     if (selection < 1 || selection > _robotList.size())
     {
         std::cout << "选择不合法！" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -144,6 +177,9 @@ void Community::delRobot()
 
     std::cout << "机器人删除成功！" << std::endl;
 
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 添加会话的函数
@@ -152,11 +188,15 @@ void Community::addConversation()
     std::cout << "请输入会话的名字：";
     std::string name;
     std::cin >> name;
+    getchar();
 
     // 检查会话是否已经存在于std::vector<std::string> _conversationList中
     if (std::find(_conversationList.begin(), _conversationList.end(), name) != _conversationList.end())
     {
         std::cout << "会话已经存在！" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -166,9 +206,13 @@ void Community::addConversation()
     this->showRobotList();
     int selection;
     std::cin >> selection;
+    getchar();
     if (selection < 1 || selection > _robotList.size())
     {
         std::cout << "选择不合法！" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
     std::string robotName = _robotList[selection - 1];
@@ -188,6 +232,10 @@ void Community::addConversation()
     file2.close();
 
     std::cout << "会话添加成功！" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 显示会话列表的函数
@@ -197,6 +245,9 @@ void Community::showConversationList() const
     if (this->_conversationList.empty())
     {
         std::cout << "No conversation to display." << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -206,6 +257,10 @@ void Community::showConversationList() const
     {
         std::cout << i + 1 << ". " << _conversationList[i] << std::endl;
     }
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 删除会话的函数
@@ -215,6 +270,9 @@ void Community::delConversation()
     if (this->_conversationList.empty())
     {
         std::cout << "No conversation to delete." << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -225,9 +283,13 @@ void Community::delConversation()
     std::cout << "请选择要删除的会话：";
     size_t choice;
     std::cin >> choice;
+    getchar();
     if (choice < 1 || choice > this->_conversationList.size())
     {
         std::cout << "无效选择" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -247,6 +309,10 @@ void Community::delConversation()
     std::remove(("../files/community/communityInfo/community" + this->_name + "/conversationHistory/conversation" + this->_conversationList[choice - 1] + ".txt").c_str());
 
     std::cout << "会话删除成功！" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 退出社区
@@ -254,6 +320,10 @@ void Community::exitCommunity()
 {
     this->_curUser->setUserStatus(USER_STATUS_MAINMENU);
     std::cout << "退出社区成功！" << std::endl;
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 进入会话
@@ -263,6 +333,9 @@ void Community::enterConversation()
     if (this->_conversationList.empty())
     {
         std::cout << "No conversation to enter." << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -277,9 +350,13 @@ void Community::enterConversation()
     std::cout << "请选择要进入的会话：";
     size_t choice;
     std::cin >> choice;
+    getchar();
     if (choice < 1 || choice > this->_conversationList.size())
     {
         std::cout << "无效选择" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -288,9 +365,12 @@ void Community::enterConversation()
     std::string creatorName;
     // 用户名位于第一行
     std::getline(file, creatorName);
-    if (creatorName!= this->_curUser->getName())
+    if (creatorName != this->_curUser->getName())
     {
         std::cout << "您没有权限进入这个会话" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         return;
     }
 
@@ -310,11 +390,19 @@ void Community::enterConversation()
     // 需要先创建一个Robot
     Robot robot(robotName);
     Conversation conversation(this->_curUser, &robot, this->_name);
-    
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
+
     conversation.chat();
-    
+
     // 更新用户状态
     this->_curUser->setUserStatus(USER_STATUS_COMMUNITY);
+
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 
 // 返回名字

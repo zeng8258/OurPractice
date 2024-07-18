@@ -1,21 +1,11 @@
-/* #include <iostream>
-#include "test.hpp"
-int main()
-{
-    int a = 10;
-    int b = 20;
-    swap(a, b);
-    std::cout << "a = " << a << ", b = " << b << std::endl;
-    return 0;
-} */
-
 #include <iostream>
 #include "Manager.hpp"
+
+
 int main()
 {
-    // 获得单件类Manager对象
+    // 获得Manager对象
     Manager manager;
-    
 
     while (true)
     {
