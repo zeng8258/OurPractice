@@ -34,7 +34,7 @@ public:
   void clearContext();
 private:
   std::string _name; // AI的名字
-  char *_key;        // 密钥
+  std::string _key;        // 密钥
 
   std::string _input; // 用户输入的内容
   json _response;     // AI的回复

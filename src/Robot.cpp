@@ -1,8 +1,9 @@
 #include "Robot.hpp"
+#include "def.hpp"
 
 Robot::Robot() : _name("Robot"), _key(KEY)
 {
-  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
+  openai::start(KEY, "", true, "https://agino.me/");
 
   _response = R"(
       {
@@ -16,7 +17,7 @@ Robot::Robot() : _name("Robot"), _key(KEY)
 
 Robot::Robot(std::string name) : _name(name), _key(KEY)
 {
-  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
+  openai::start(KEY, "", true, "https://agino.me/");
 
   _response = R"(
       {
@@ -65,5 +66,4 @@ void Robot::setTemperature(double temperature)
 // 清除上下文
 void Robot::clearContext()
 {
-  openai::start("sk-0DITh75zrxk-8tM6mhckTA", "", true, "https://agino.me/");
 }

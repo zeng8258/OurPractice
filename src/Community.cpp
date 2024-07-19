@@ -121,10 +121,6 @@ void Community::showRobotList() const
             std::cout << i + 1 << ". " << _robotList[i] << std::endl;
         }
     }
-
-    // 暂停和清屏
-    function::pause();
-    function::clear();
 }
 
 // 删除机器人的函数
@@ -245,9 +241,7 @@ void Community::showConversationList() const
     if (this->_conversationList.empty())
     {
         std::cout << "No conversation to display." << std::endl;
-        // 暂停和清屏
-        function::pause();
-        function::clear();
+
         return;
     }
 
@@ -257,10 +251,6 @@ void Community::showConversationList() const
     {
         std::cout << i + 1 << ". " << _conversationList[i] << std::endl;
     }
-
-    // 暂停和清屏
-    function::pause();
-    function::clear();
 }
 
 // 删除会话的函数
@@ -425,8 +415,12 @@ void Community::run(const int selection)
         this->addRobot();
         break;
     case 4: // 查看机器人列表
+    {
         this->showRobotList();
+        function::pause();
+        function::clear();
         break;
+    }
     case 5: // 删除机器人
         this->delRobot();
         break;
@@ -434,13 +428,23 @@ void Community::run(const int selection)
         this->addConversation();
         break;
     case 7: // 查看会话列表
+    {
         this->showConversationList();
+        function::pause();
+        function::clear();
         break;
+    }
     case 8: // 删除会话
         this->delConversation();
         break;
     case 9: // 退出社区
         this->exitCommunity();
         break;
+    default:
+        std::cout << "无效选择" << std::endl;
+        function::pause();
+        function::clear();
+        break;
     }
+    
 }

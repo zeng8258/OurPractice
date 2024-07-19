@@ -177,15 +177,12 @@ void Manager::login()
                 return;
             }
         }
-        else // 未找到用户名
-        {
-            std::cout << "用户名不存在" << std::endl;
-            // 暂停和清屏
-            function::pause();
-            function::clear();
-            return;
-        }
     }
+    // 未找到用户名
+    std::cout << "用户名不存在" << std::endl;
+    // 暂停和清屏
+    function::pause();
+    function::clear();
 }
 void Manager::exitManager()
 {
@@ -234,10 +231,9 @@ void Manager::addCommunity()
     outfile << communityName << std::endl;
     outfile.close();
 
-    // 创建files/community/communityInfo/community" + communityName 文件夹 
+    // 创建files/community/communityInfo/community" + communityName 文件夹
     std::string path = "../files/community/communityInfo/community" + communityName;
     std::filesystem::create_directory(path);
-    
 
     // 创建files/community/communityInfo/community" + communityName/robotInfo 和 conversationInfo 和 conversationHistory 文件夹
     std::string robotInfoPath = path + "/robotInfo";
@@ -296,16 +292,37 @@ void Manager::enterCommunity()
     function::clear();
 }
 
-void Manager::showCommunityInfo() const
+void Manager::showCommunityInfo()
 {
+    // 显示社区列表
+    this->showCommunityList();
+
+    // 输入社区序号
+    int communityIndex;
+    std::cout << "请输入社区序号：";
+    std::cin >> communityIndex;
+    getchar();
+
+    // 检查
+    if (communityIndex < 1 || communityIndex > this->_communityList.size())
+    {
+        std::cout << "社区序号错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
+        return;
+    }
+
+    Community community = Community(this->_communityList[communityIndex - 1], &(this->_curUser));
+
     // 显示社区名字
-    std::cout << "社区名称：" << this->_curCommunity.getName() << std::endl;
+    std::cout << "社区名称：" << community.getName() << std::endl;
 
     // 显示robot列表
-    this->_curCommunity.showRobotList();
+    community.showRobotList();
 
     // 显示会话列表
-    this->_curCommunity.showConversationList();
+    community.showConversationList();
 
     // 暂停和清屏
     function::pause();
@@ -425,8 +442,13 @@ void Manager::runOrigin(int selection)
         this->exitManager();
         break;
     default:
+    {
         std::cout << "输入错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         break;
+    }
     }
 }
 
@@ -444,8 +466,13 @@ void Manager::runMain(int selection)
         this->showCommunityInfo();
         break;
     case 4: // 显示社区列表
+    {
         this->showCommunityList();
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         break;
+    }
     case 5: // 修改用户
         this->changeUser();
         break;
@@ -454,6 +481,9 @@ void Manager::runMain(int selection)
         break;
     default:
         std::cout << "输入错误" << std::endl;
+        // 暂停和清屏
+        function::pause();
+        function::clear();
         break;
     }
 }

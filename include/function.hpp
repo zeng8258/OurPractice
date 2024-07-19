@@ -9,7 +9,7 @@ public:
     // 暂停
     inline static void pause()
     {
-        std::cout << "按任意键继续..." << std::endl;
+        std::cout << "按回车键继续..." << std::endl;
         std::cin.ignore();
     }
 

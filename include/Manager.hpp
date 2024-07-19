@@ -12,9 +12,9 @@
 
 class Manager
 {
-//private:
-    // 单件类
-    //Manager();
+    // private:
+    //  单件类
+    // Manager();
 
 public:
     // 构造
@@ -22,7 +22,7 @@ public:
     // 析构
     ~Manager();
     // 获取实例对象
-    //static Manager &getInstance();
+    // static Manager &getInstance();
 
     // 功能
     void showMenu() const;   // 显示菜单
@@ -46,7 +46,7 @@ private:
     // 主界面
     void addCommunity();            // 创建社区
     void enterCommunity();          // 进入社区
-    void showCommunityInfo() const; // 显示社区信息
+    void showCommunityInfo();       // 显示社区信息
     void showCommunityList() const; // 显示社区列表
     void changeUser();              // 切换用户
     void logout();                  // 退出登录
@@ -68,7 +68,7 @@ private:
     // void outCommunity(); // 退出社区
 
 private:
-    //static Manager *_instance;
+    // static Manager *_instance;
 
     std::vector<std::string> _communityList; // 社区列表
     Community _curCommunity;                 // 当前社区
